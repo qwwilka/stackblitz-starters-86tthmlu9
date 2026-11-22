@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>MonoK Shop — ММ2 и Telegram Stars</title>
+  <style>
+    :root {
+      --bg: #083d77;
+      --card: #062e59;
+      --line: #12549c;
+      --text: #ebebd3;
+      --muted: #c2c5b8;
+      --gold: #f4d35e;
+      --sand: #ee964b;
+      --tomato: #f95738;
+      color-scheme: dark;
+      box-sizing: border-box;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+    :root[data-theme="light"] {
+      --bg: #ebebd3;
+      --card: #f7f7eb;
+      --line: #d4d4bc;
+      --text: #083d77;
+      --muted: #3b5f87;
+      color-scheme: light;
+    }
+    * { box-sizing: border-box; }
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: env(safe-area-inset-top, 20px);
+    }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      font-weight: 300;
+      line-height: 1.55;
+      background-image: 
+        radial-gradient(600px 400px at 85% -5%, rgba(244, 211, 94, .22), transparent),
+        radial-gradient(500px 400px at 0% 20%, rgba(249, 87, 56, .18), transparent);
+      background-repeat: no-repeat;
+      transition: background-color .2s, color .2s;
+    }
+    .w {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 0;
+      background: transparent;
+      border: none;
+    }
+    .logo {
+      font-weight: 900;
+      font-size: 20px;
+      letter-spacing: .5px;
+      color: var(--text);
+    }
+    .logo b {
+      background: linear-gradient(90deg, var(--gold), var(--tomato));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .btn {
+      display: inline-block;
+      padding: 12px 22px;
+      border-radius: 12px;
+      font-weight: 800;
+      text-decoration: none;
+      color: #fff;
+      background: linear-gradient(90deg, var(--sand), var(--tomato));
+      box-shadow: 0 6px 24px rgba(249, 87, 56, .35);
+      transition: transform .15s, box-shadow .15s;
+      border: none;
+      cursor: pointer;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(249, 87, 56, .5);
+    }
+    .btn.o {
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      box-shadow: none;
+    }
+    :root[data-theme="light"] .btn.o {
+      border-color: var(--tomato);
+      color: var(--tomato);
+    }
+    .btn.o:hover {
+      background: rgba(244, 211, 94, .1);
+    }
+    .hero {
+      text-align: center;
+      padding: 56px 0 40px;
+    }
+    .tag {
+      display: inline-block;
+      padding: 6px 14px;
+      border: 1px solid var(--line);
+      background: var(--card);
+      border-radius: 99px;
+      color: var(--gold);
+      font-weight: 600;
+      font-size: 13px;
+      margin-bottom: 18px;
+    }
+    :root[data-theme="light"] .tag {
+      color: var(--tomato);
+    }
+    h1 {
+      font-size: clamp(34px, 7vw, 60px);
+      font-weight: 900;
+      line-height: 1.1;
+      margin: 0 0 16px;
+    }
+    h1 span {
+      background: linear-gradient(90deg, var(--gold), var(--sand), var(--tomato));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .hero p {
+      color: var(--muted);
+      max-width: 520px;
+      margin: 0 auto 26px;
+      font-size: 18px;
+    }
+    .row {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    section { padding: 40px 0; }
+    h2 {
+      font-size: 28px;
+      font-weight: 800;
+      margin: 0 0 6px;
+    }
+    .sub {
+      color: var(--muted);
+      margin: 0 0 24px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 14px;
+    }
+    .c {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 22px;
+      transition: border-color .2s, transform .2s, background-color .2s;
+    }
+    .c:hover {
+      border-color: var(--gold);
+      transform: translateY(-3px);
+    }
+    .ic {
+      font-size: 34px;
+      margin-bottom: 8px;
+    }
+    .c h3 {
+      margin: 0 0 6px;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .c p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .c .btn {
+      padding: 9px 16px;
+      font-size: 14px;
+    }
+    .steps { counter-reset: s; }
+    .steps .c {
+      position: relative;
+      padding-top: 44px;
+    }
+    .steps .c::before {
+      counter-increment: s;
+      content: counter(s);
+      position: absolute;
+      top: 14px;
+      left: 20px;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), var(--tomato));
+      color: #083d77;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    ul.r {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 10px;
+    }
+    ul.r li {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--tomato);
+      border-radius: 12px;
+      padding: 14px 16px;
+    }
+    .cta {
+      text-align: center;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 40px 20px;
+      margin: 20px 0;
+    }
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      padding: 30px 0 40px;
+    }
+    footer a { color: var(--tomato); font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="w">
+    <nav>
+      <div class="logo">Mono<b>K</b> Shop</div>
+      <div style="display:flex; gap:10px; align-items:center;">
+        <button id="theme-btn" class="btn o" style="padding:10px 14px; font-size:16px;" title="Сменить тему">☀️</button>
+        <a class="btn" href="https://t.me/MonoK_Shop" target="_blank" rel="noopener">Канал</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div class="tag">✦ Murder Mystery 2 · Telegram Stars</div>
+      <h1>Продажа <span>ММ2</span><br>и звезд в телеграмме</h1>
+      <p>Оружия из Murder Mystery 2 и звёзды для Telegram. Пиши владельцу в Telegram — там узнаешь цену.</p>
+      <div class="row">
+        <a class="btn" href="https://t.me/qww_shop" target="_blank" rel="noopener">Купить в Telegram</a>
+        <a class="btn o" href="#catalog">Что продаём</a>
+      </div>
+    </header>
+
+    <section id="catalog">
+      <h2>Что продаём</h2>
+      <p class="sub">Актуальные цены и наличие уточняй у владельца в Telegram.</p>
+      <div class="grid">
+        <div class="c">
+          <div class="ic"></div>
+          <h3>Ножи ММ2</h3>
+          <p>Оружия из Murder Mystery 2.</p>
+          <a class="btn" href="https://t.me/qww_shop" target="_blank" rel="noopener">Узнать цену</a>
+        </div>
+        <div class="c">
+          <div class="ic"></div>
+          <h3>Пистолеты ММ2</h3>
+          <p>Годные пистолеты.</p>
+          <a class="btn" href="https://t.me/qww_shop" target="_blank" rel="noopener">Узнать цену</a>
+        </div>
+        <div class="c">
+          <div class="ic"></div>
+          <h3>Питомцы и предметы</h3>
+          <p>Питомцы из игры.</p>
+          <a class="btn" href="https://t.me/qww_shop" target="_blank" rel="noopener">Узнать цену</a>
+        </div>
+        <div class="c">
+          <div class="ic"></div>
+          <h3>Telegram Stars</h3>
+          <p>Звёзды для Telegram — любое количество.</p>
+          <a class="btn" href="https://t.me/qww_shop" target="_blank" rel="noopener">Узнать цену</a>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Как купить</h2>
+      <p class="sub">Три простых шага.</p>
+      <div class="grid steps">
+        <div class="c">
+          <h3>Напиши владельцу</h3>
+          <p>Выбери товар и напиши в Telegram: @qww_shop или @qwxxds4.</p>
+        </div>
+        <div class="c">
+          <h3>Договорись об оплате</h3>
+          <p>Уточни цену и способ оплаты.</p>
+        </div>
+        <div class="c">
+          <h3>Получи заказ</h3>
+          <p>Товар выдаётся после оплаты по договорённости.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Правила магазина</h2>
+      <p class="sub">Пожалуйста, прочитай перед покупкой.</p>
+      <ul class="r">
+        <li> Спрашивай разрешения у родителей перед покупкой.</li>
+        <li>↩ Возврата нет, но если возникнет проблема — я верну деньги.</li>
+        <li>Не спамь: норма — 5 сообщений.</li>
+      </ul>
+    </section>
+
+    <div class="cta">
+      <h2>Готов купить?</h2>
+      <p class="sub">Пиши в Telegram — отвечу и всё подскажу.</p>
+      <div class="row">
+        <a class="btn" href="https://t.me/qww_shop" target="_blank" rel="noopener">@qww_shop</a>
+        <a class="btn o" href="https://t.me/qwxxds4" target="_blank" rel="noopener">@qwxxds4</a>
+        <a class="btn o" href="https://t.me/qww_shop02" target="_blank" rel="noopener">Отзывы</a>
+      </div>
+    </div>
+
+    <footer>© MonoK Shop · <a href="https://t.me/MonoK_Shop" target="_blank" rel="noopener">Telegram-канал</a></footer>
+  </div>
+
+  <script>
+    // Плавная прокрутка для всех ссылок с якорями
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          targetElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    const btn = document.getElementById('theme-btn');
+    const root = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light') {
+      root.setAttribute('data-theme', 'light');
+      btn.textContent = '🌙';
+    }
+
+    btn.onclick = () => {
+      const isLight = root.getAttribute('data-theme') === 'light';
+      if (isLight) {
+        root.removeAttribute('data-theme');
+        btn.textContent = '☀️';
+        localStorage.setItem('theme', 'dark');
+      } else {
+        root.setAttribute('data-theme', 'light');
+        btn.textContent = '🌙';
+        localStorage.setItem('theme', 'light');
+      }
+    };
+  </script>
+</body>
+</html>
